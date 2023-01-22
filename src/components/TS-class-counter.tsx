@@ -10,7 +10,11 @@ type AppState = {
     stoped: boolean;
 };
 
-class TSClassesCounter extends React.Component<AppProps, AppState> {
+/**
+ * Author: Felipe Oliveira
+ * Description: Example of a React components using class and Typescript.
+ */
+class TSClassCounter extends React.Component<AppProps, AppState> {
     private intervalID: number;
 
     constructor(props: AppProps) {
@@ -58,7 +62,7 @@ class TSClassesCounter extends React.Component<AppProps, AppState> {
 
     render() {
         return (
-            <div className="TSClassesCounter">
+            <div>
                 <h1>{this.state.count}</h1>
                 <button onClick={() => this.stopCounter()}>Stop Count</button>
                 <br></br>
@@ -69,4 +73,4 @@ class TSClassesCounter extends React.Component<AppProps, AppState> {
     }
 }
 
-export default TSClassesCounter;
+export default TSClassCounter;

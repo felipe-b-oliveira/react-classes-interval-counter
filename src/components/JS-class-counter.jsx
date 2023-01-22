@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import "../../styles/global.css";
 
-class JSClassesCounter extends Component {
+/**
+ * Author: Felipe Oliveira
+ * Description: Example of a React components using class and simple Javascript. 
+ */
+class JSClassCounter extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,4 +60,4 @@ class JSClassesCounter extends Component {
     }
 }
 
-export default JSClassesCounter;
+export default JSClassCounter;
