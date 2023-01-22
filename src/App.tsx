@@ -7,67 +7,70 @@ type AppProps = {
 
 type AppState = {
     count: number;
-    started: boolean;
-    intervalId: string;
+    stoped: boolean;
 };
 
 class App extends React.Component<AppProps, AppState> {
-    private timer: number;
+    private intervalID: number;
 
     constructor(props: AppProps) {
         super(props);
 
         this.state = {
             count: 0,
-            started: false,
-            intervalId: "",
+            stoped: true
         };
 
-        this.timer = 0;
+        this.intervalID = 0;
         this.setCount = this.setCount.bind(this);
-        this.stopCount = this.stopCount.bind(this);
-        this.startCount = this.startCount.bind(this);
+        this.stopCounter = this.stopCounter.bind(this);
+        this.startCounter = this.startCounter.bind(this);
     }
 
     componentDidMount() {
         this.startCounter();
     }
 
+    componentWillUnmount() {
+        clearInterval(this.intervalID);
+    }
+
+    // componentDidUpdate(prevProps: AppProps, prevState: AppState, snapshot: string) {
+    //     if (!prevState.stoped) {
+    //         clearInterval(this.timer);
+    //         this.setState({ stoped: true, count: 0 });
+    //     }
+    // }
+
     setCount = () => {
-        this.setState({count: this.state.count + 1});
+        this.setState({ count: this.state.count + 1 });
     };
 
     startCounter = () => {
-        const {started} = this.state;
-        if (!started) {
-            this.timer = setInterval(this.setCount, 1000);
-            this.setState({started: true});
+        const { stoped } = this.state;
+        console.log(stoped)
+        if (stoped) {
+            this.intervalID = setInterval(this.setCount, 1000);
+            this.setState({ stoped: false });
         } else {
-            clearInterval(this.timer);
-            this.setState({started: false});
+            clearInterval(this.intervalID);
+            this.setState({ stoped: true });
         }
     };
 
-    stopCount = () => {
-        clearInterval(this.timer);
-        this.setState({started: false, count: 0});
-    };
-
-    startCount = () => {
-        const {started} = this.state;
-        if (!started) {
-            this.startCounter();
-        }
+    stopCounter = () => {
+        clearInterval(this.intervalID);
+        this.setState({ stoped: true, count: 0 });
     };
 
     render() {
         return (
             <div className="App">
                 <h1>{this.state.count}</h1>
-                <button onClick={() => this.stopCount()}>Stop Count</button>
+                <button onClick={() => this.stopCounter()}>Stop Count</button>
                 <br></br>
                 <br></br>
-                <button onClick={() => this.startCount()}>Start Count</button>
+                <button onClick={() => this.startCounter()}>Start Count</button>
             </div>
         );
     }
