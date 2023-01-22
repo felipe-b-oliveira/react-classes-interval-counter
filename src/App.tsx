@@ -1,9 +1,9 @@
-import TSClassesCounter from "../src/components/TS-classes-counter";
+import TSClassCounter from "./components/TS-class-counter";
 
 export function App() {
     return (
         <>
-            <TSClassesCounter />
+            <TSClassCounter />
         </>
     )
 }
