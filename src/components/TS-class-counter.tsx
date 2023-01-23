@@ -16,6 +16,7 @@ type AppState = {
  */
 class TSClassCounter extends React.Component<AppProps, AppState> {
     private intervalID: number;
+    private FILE_NAME: string;
 
     constructor(props: AppProps) {
         super(props);
@@ -26,38 +27,60 @@ class TSClassCounter extends React.Component<AppProps, AppState> {
         };
 
         this.intervalID = 0;
+        this.FILE_NAME = "TSClassCounter";
+        
         this.setCount = this.setCount.bind(this);
         this.stopCounter = this.stopCounter.bind(this);
         this.startCounter = this.startCounter.bind(this);
     }
 
     componentDidMount() {
-        this.startCounter();
+        try {
+            this.startCounter();
+        } catch (error) {
+            console.log(this.FILE_NAME, "Error on mounting:", error);
+        }
     }
 
     componentWillUnmount() {
-        clearInterval(this.intervalID);
+        try {
+            clearInterval(this.intervalID);
+        } catch (error) {
+            console.log(this.FILE_NAME, "Error on unmounting:", error);
+        }
     }
 
     setCount = () => {
-        this.setState({ count: this.state.count + 1 });
+        try {
+            this.setState({ count: this.state.count + 1 });
+        } catch (error) {
+            console.log(this.FILE_NAME, "Error on setting 'count' state:", error);
+        }
     };
 
     startCounter = () => {
-        const { stoped } = this.state;
-        console.log(stoped)
-        if (stoped) {
-            this.intervalID = setInterval(this.setCount, 1000);
-            this.setState({ stoped: false });
-        } else {
-            clearInterval(this.intervalID);
-            this.setState({ stoped: true });
+        try {
+            const { stoped } = this.state;
+            console.log(stoped)
+            if (stoped) {
+                this.intervalID = setInterval(this.setCount, 1000);
+                this.setState({ stoped: false });
+            } else {
+                clearInterval(this.intervalID);
+                this.setState({ stoped: true });
+            }
+        } catch (error) {
+            console.log(this.FILE_NAME, "Error on start counter:", error);
         }
     };
 
     stopCounter = () => {
-        clearInterval(this.intervalID);
-        this.setState({ stoped: true, count: 0 });
+        try {
+            clearInterval(this.intervalID);
+            this.setState({ stoped: true, count: 0 });
+        } catch (error) {
+            console.log(this.FILE_NAME, "Error on stop counter:", error);
+        }
     };
 
     render() {
